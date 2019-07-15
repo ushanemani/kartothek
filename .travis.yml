@@ -10,7 +10,7 @@ python:
 env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
-  - KARTOTHEK_ARROW_VERSION=0.14.0
+  - KARTOTHEK_ARROW_VERSION=0.XX.0
 
 before_install:
   - pip install --upgrade pip
@@ -21,6 +21,7 @@ before_install:
 install:
   - pip install -r test-requirements-pinned.txt
   - pip install --no-deps dist/*
+  - ./it_requirements.sh $KARTOTHEK_ARROW_VERSION
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
