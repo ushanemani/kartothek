@@ -18,8 +18,7 @@ before_install:
 install:
   - pip install -r test-requirements-pinned.txt
   - pip install --no-deps dist/*
-  - if: branch != master
-      ./it_requirements.sh
+  - ./it_requirements.sh
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
