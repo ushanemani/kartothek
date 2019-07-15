@@ -10,6 +10,7 @@ python:
 env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
+  - KARTOTHEK_ARROW_VERSION=0.14.0
 
 before_install:
   - pip install --upgrade pip
@@ -33,22 +34,6 @@ script:
 after_success:
   - pip install codecov
   - codecov
-
-stages:
-  - name: integratedtest
-    if: branch = master OR type IN (pull_request) OR tag IS present
-
-# deploy jobs
-jobs:
-  include:
-    - stage: integratedtest
-      script: >-
-        pip -y uninstall pyarrow &&
-        echo "installing PyArrow latest version" &&
-        pip install pyarrow==0.14.0 &&
-        pytest &&
-        pip uninstall -y pyarrow &&
-        pip install pyarrow==0.13.0
 
 deploy:
   provider: pypi
