@@ -11,19 +11,17 @@ env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
 
-if: branch = master
 matrix:
   include:
-  - dist: xenial
-    env:
-      - BRANCH="DEV"
-
+    - name: "integration tests"
+      if: branch=kartothek_branch
+        env: RUN_INTEGRATION="true"
 
 before_install:
   - pip install --upgrade pip
   - pip install pip-tools
   - ./compile_requirements.sh
-  - if [[ "$BRANCH" == "DEV" ]]; then
+  - if [[ ! -z {RUN_INTEGRATION} ]]; then
     ./it_requirements.sh;
     fi
   - python setup.py bdist_wheel
