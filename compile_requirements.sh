@@ -4,7 +4,7 @@ set -xeo pipefail
 productionIndex=platform
 developmentIndex=platform_dev
 
-if [ ! -z ${KARTOTHEK_ARROW_VERSION} ];
+if [ ! -z ${KARTOTHEK_ARROW_VERSION} ] && [ "$${KARTOTHEK_ARROW_VERSION}" != "0.XX.0" ];
 then
     echo pyarrow==$KARTOTHEK_ARROW_VERSION > kartothek_env_reqs.txt
     trap 'rm -f kartothek_env_reqs.txt' EXIT
