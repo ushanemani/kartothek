@@ -8,27 +8,30 @@ python:
   - 3.7
 
 env:
-  - KARTOTHEK_ARROW_VERSION=0.12.0
+  - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
 
+if: branch = numpan_nightly
 matrix:
   include:
   - dist: xenial
     env:
-      KARTOTHEK_ARROW_VERSION=0.XX.0
+      - BRANCH="DEV"
+
 
 before_install:
   - pip install --upgrade pip
   - pip install pip-tools
   - ./compile_requirements.sh
-  - if [[ "KARTOTHEK_ARROW_VERSION" == "0.XX.0" ]]; then
-     ./it_requirements.sh;
+  - if [[ "$BRANCH" == "DEV" ]]; then
+    ./it_requirements.sh;
     fi
   - python setup.py bdist_wheel
 
 install:
   - pip install -r test-requirements-pinned.txt
   - pip install --no-deps dist/*
+
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
@@ -37,11 +40,10 @@ before_script:
   - python setup.py docs
 
 script:
-  - if version==0.xx.0
+  - pytest --cov kartothek --cov-report xml --cov-report html
 
 after_success:
-  - pip install codecov
-  - codecov
+  - pip install codecov  - codecov
 
 deploy:
   provider: pypi
@@ -52,4 +54,3 @@ deploy:
     tags: true
   distributions: "sdist bdist_wheel"
   skip_existing: true
-
