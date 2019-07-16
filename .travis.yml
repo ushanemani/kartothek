@@ -14,7 +14,7 @@ env:
 matrix:
   include:
     - name: "integration tests"
-      if: branch=kartothek_branch
+      if: branch=master
       env: RUN_INTEGRATION="true"
 
 before_install:
