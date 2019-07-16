@@ -21,9 +21,7 @@ before_install:
   - pip install --upgrade pip
   - pip install pip-tools
   - ./compile_requirements.sh
-  - if [[ ! -z {RUN_INTEGRATION} ]]; then
-    ./it_requirements.sh;
-    fi
+  - if [[ ! -z {RUN_INTEGRATION} ]]; then ./it_requirements.sh; fi
   - python setup.py bdist_wheel
 
 install:
